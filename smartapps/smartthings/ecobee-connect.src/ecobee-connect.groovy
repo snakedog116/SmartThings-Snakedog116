@@ -13,7 +13,7 @@
  *	Ecobee Service Manager
  *
  *	Author: scott
- *	Date: 2013-08-07
+ *	Date: 2013-08-07cl
  *
  *  Last Modification:
  *      JLH - 01-23-2014 - Update for Correct SmartApp URL Format
@@ -795,8 +795,10 @@ def updateThermostatData() {
 			heatingSetpoint: stat.runtime.desiredHeat / 10,
 			coolingSetpoint: stat.runtime.desiredCool / 10,
 			thermostatMode: stat.settings.hvacMode,                            
+//Start Climate Controls
 			currentClimate: stat.climate.climateRef,
-            humidity: stat.runtime.actualHumidity,
+//End Climate Controls
+			humidity: stat.runtime.actualHumidity,
 			thermostatOperatingState: getThermostatOperatingState(stat),
 			weatherSymbol: stat.weather.forecasts[0].weatherSymbol.toString(),
 			weatherTemperature: (stat.weather.forecasts[0].temperature.toDouble() / 10).round(0)
@@ -1022,7 +1024,7 @@ def setMode(child, mode, deviceId) {
 	return result
 }
 
-
+//Start Climate Controls
 def setClimate(child, Climate, deviceId) {
 //    def thermostatIdsString = getChildDeviceIdsString()
 //    log.debug "setCoolingSetpoint children: $thermostatIdsString"
@@ -1033,7 +1035,7 @@ def setClimate(child, Climate, deviceId) {
 //    debugEvent ("Mode Request Body = ${jsonRequestBody}")
 
 }
-
+//End Climate Controls
 def sendJson(child = null, String jsonBody) {
 
 	def returnStatus = false
