@@ -47,8 +47,6 @@ metadata {
         capability "Color Temperature"
 
 		command "setAdjustedColor"
-
-		fingerprint profileId: "C05E", inClusters: "0000,0003,0004,0005,0006,0008,0300,1000", outClusters: "0019"
 	}
 
 	// simulator metadata
@@ -73,7 +71,8 @@ metadata {
                 attributeState "turningOff", label:'${name}', action:"switch.on", icon:"st.switches.light.off", backgroundColor:"#ffffff", nextState:"turningOn"
             }
             tileAttribute ("device.level", key: "SLIDER_CONTROL") {
-                attributeState "level", action:"switch level.setLevel"
+                attributeState "level", action:"switch level.setLevel", backgroundColor:"#79b821"
+
             }
             tileAttribute ("device.color", key: "COLOR_CONTROL") {
                 attributeState "color", action:"setAdjustedColor"
@@ -81,7 +80,7 @@ metadata {
             
             
         }    
-		standardTile("switch2", "device.switch", width: 1, height: 1, canChangeIcon: true) {
+		standardTile("switch2", "device.switch", width: 2, height: 2, canChangeIcon: true) {
 			state "on", label:'${name}', action:"switch.off", icon:"st.switches.switch.on", backgroundColor:"#79b821", nextState:"turningOff"
 			state "off", label:'${name}', action:"switch.on", icon:"st.switches.switch.off", backgroundColor:"#ffffff", nextState:"turningOn"
 			state "turningOn", label:'${name}', action:"switch.off", icon:"st.switches.switch.on", backgroundColor:"#79b821", nextState:"turningOff"
@@ -94,29 +93,56 @@ metadata {
 			state "color", action:"setAdjustedColor"
 		}
 		controlTile("levelSliderControl", "device.level", "slider", height: 2, width: 4, inactiveLabel: false, range:"(0..100)") {
-			state "level", action:"switch level.setLevel"
+			state "level", action:"switch level.setLevel", backgroundColor:"#79b821"
 		}
 		valueTile("level", "device.level", inactiveLabel: false, height: 2, width: 2, decoration: "flat") {
-			state "level", label: 'Level ${currentValue}%'
+			state "level", label: 'Level ${currentValue}%',
+          	  backgroundColors: [
+					[value: 0, color: "#000000"],
+                    [value: 10, color: "#243709"],
+					[value: 30, color: "#3c5c10"],
+					[value: 50, color: "#548017"],
+					[value: 70, color: "#6ca51d"],
+					[value: 90, color: "#79b821"],
+			]
 		}
-		controlTile("saturationSliderControl", "device.saturation", "slider", height: 1, width: 2, inactiveLabel: false) {
-			state "saturation", action:"color control.setSaturation"
+		controlTile("saturationSliderControl", "device.saturation", "slider", height: 2, width: 4, range:"(0..100)", inactiveLabel: false) {
+			state "saturation", action:"color control.setSaturation", backgroundColor:"#ff8100"
 		}
-		valueTile("saturation", "device.saturation", inactiveLabel: false, decoration: "flat") {
-			state "saturation", label: 'Sat ${currentValue}    '
+		valueTile("saturation", "device.saturation", height: 1, width: 2, inactiveLabel: false, decoration: "flat") {
+			state "saturation", label: 'Sat ${currentValue}', backgroundColor:"#ff8100"
 		}
-		controlTile("hueSliderControl", "device.hue", "slider", height: 2, width: 4, inactiveLabel: false) {
-			state "hue", action:"color control.setHue"
+		controlTile("hueSliderControl", "device.hue", "slider", height: 2, width: 4, range:"(0..100)", inactiveLabel: false) {
+			state "hue", action:"color control.setHue", backgroundColor: "#f00"
 		}
+		valueTile("hue", "device.hue", height: 1, width: 2, inactiveLabel: false, decoration: "flat") {
+			state "hue", label: 'Hue ${currentValue}',
+          	  backgroundColors: [
+					[value: 0, color: "#f00"],
+                    [value: 6, color: "#ff5e00"],
+                    [value: 14, color: "#ffd500"],
+					[value: 37, color: "#00ff3c"],
+					[value: 67, color: "#1900ff"],
+					[value: 78, color: "#b700ff"],
+					[value: 100, color: "#f00"],
+				]
+            }
         controlTile("colorTempSliderControl", "device.colorTemperature", "slider", height: 2, width: 4, inactiveLabel: false, range:"(2700..6500)") {
-            state "colorTemperature", action:"color temperature.setColorTemperature"
-        }
+            state "colorTemperature", action:"color temperature.setColorTemperature", backgroundColor:"#FFA757"
+		}
         valueTile("colorTemp", "device.colorTemperature", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
-            state "colorTemperature", label: '${currentValue} K'
+            state "colorTemperature", label: '${currentValue}K',
+          	  backgroundColors: [
+					[value: 2700, color: "#FFA757"],
+                    [value: 3500, color: "#FFC18D"],
+					[value: 4500, color: "#FFDABB"],
+					[value: 5500, color: "#FFEDDE"],
+					[value: 6000, color: "#bed0ff"],
+					[value: 6500, color: "#8babff"],
+			]
         }
-        
 		main(["switch"])
-		details(["switch", "levelSliderControl", "level", "colorTempSliderControl", "colorTemp", "rgbSelector", "refresh"])
+		details(["switch", "levelSliderControl", "level", "colorTempSliderControl", "colorTemp", "rgbSelector", "hueSliderControl", "hue", "saturation", "saturationSliderControl", "refresh"])
 	}
 }
 
