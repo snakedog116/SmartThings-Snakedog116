@@ -41,14 +41,15 @@ metadata {
 		command "switchMode"
 		
 		// Capability "Thermostat"
-        attribute "temperatureScale", "string"
+		attribute "temperatureScale", "string"
 		attribute "thermostatSetpoint", "number"
 		attribute "thermostatStatus", "string"
-        attribute "apiConnected", "string"
-        attribute "CurrentClimate", "string"
-		
+		attribute "apiConnected", "string"
 
-	
+//Start Climate Controls
+		attribute "currentClimate", "string"
+//End Climate Controls
+
 	/*
 		attribute "thermostatName", "string"
 		attribute "temperatureDisplay", "string"
@@ -421,15 +422,19 @@ metadata {
 			state "resume", action:"resumeProgram", nextState: "updating", label:'Resume Schedule', icon:"st.Office.office7"
 			state "updating", label:"Working", icon: "st.samsung.da.oven_ic_send"
 		}
-//snakedog116
- 
- 		valueTile("CurrentClimate", "device.CurrentClimate", width: 2, height: 2, inactiveLabel: false, decoration: "flat") {
-			state "away", label:'1${currentValue} away'
-            state "home", label:'2${currentValue} home'
-            state "sleep", label:'3${currentValue} sleep'
+
+//Start Climate Controls
+ 		valueTile("currentClimate", "device.currentClimate", width: 2, height: 2, inactiveLabel: false, decoration: "flat") {
+			state "Home", label:'${currentValue} home',
+				icon: "st.Home.home4"
+			state "Sleep", label:'${currentValue} sleep',
+ 				icon: "st.Bedroom.bedroom2"
+			state "Awake", label:'${currentValue} awake',
+				icon: "st.Outdoor.outdoor20"
+			state "Away", label:'${currentValue} away',
+				icon: "st.presence.car.car"
 		}
-        
-//end of snakedog116        
+//End Climate Controls    
         
         standardTile("operatingState", "device.thermostatOperatingState", width: 2, height: 2, inactiveLabel: false, decoration: "flat") {
 			state "idle", label: "Idle", backgroundColor:"#44b621", icon: "st.nest.empty"
@@ -525,10 +530,12 @@ metadata {
             "apiStatus", "resumeProgram", "mode",
             "coolSliderControl", "coolingSetpoint", 
             "heatSliderControl", "heatingSetpoint",
-//snakedog116
-			"CurrentClimate",
+
+//Start Climate Controls
+			"currentClimate",
             "refresh"])      
-        
+//Start Climate Controls
+
 /*
 		details(["summary", // MultiAttributeTile
         	"resumeProgram", "mode",  "upButtonControl", "thermostatSetpoint", // Row 1
@@ -867,10 +874,14 @@ def setThermostatMode(String value) {
 	log.debug "setThermostatMode({$value})"
 
 }
+
+//Start Climate Controls
 def setCurrentClimate(String value) {
 	log.debug "setCurrentClimate({$value})"
 
 }
+//End Climate Controls
+
 def setThermostatFanMode(String value) {
 
 	log.debug "setThermostatFanMode({$value})"
@@ -1286,8 +1297,12 @@ private void api(method, args, success = {}) {
 			type: 'get'],
 		'updateGroup': 
 			[uri: "${URI_ROOT}/group?format=json", type: 'post'],
-		'updateClimate': 
+
+//Start Climate Controls
+			'updateClimate': 
 			[uri: "${URI_ROOT}/thermostat?format=json", type: 'post'],
+//End Climate Controls
+
 		'controlPlug': 
 			[uri: "${URI_ROOT}/thermostat?format=json", type: 'post'],
 		'runtimeReport': 
