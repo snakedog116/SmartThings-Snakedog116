@@ -284,23 +284,23 @@ metadata {
                 	// Celsius Color Range
 					[value: 0, color: "#1e9cbb"],
 					[value: 15, color: "#1e9cbb"],
-                    [value: 19, color: "#1e9cbb"],
+					[value: 19, color: "#1e9cbb"],
                     
-                    [value: 21, color: "#44b621"],
+					[value: 21, color: "#44b621"],
 					[value: 22, color: "#44b621"],
-                    [value: 24, color: "#44b621"],
+					[value: 24, color: "#44b621"],
                     
 					[value: 21, color: "#d04e00"],
 					[value: 35, color: "#d04e00"],
 					[value: 37, color: "#d04e00"],
 					// Fahrenheit Color Range
-                	[value: 40, color: "#1e9cbb"],
+					[value: 40, color: "#1e9cbb"],
 					[value: 59, color: "#1e9cbb"],
-                    [value: 67, color: "#1e9cbb"],
+                			[value: 67, color: "#1e9cbb"],
                     
-                    [value: 69, color: "#44b621"], 
+                			[value: 69, color: "#44b621"], 
 					[value: 72, color: "#44b621"],
-                    [value: 74, color: "#44b621"],
+                			[value: 74, color: "#44b621"],
                     
 					[value: 76, color: "#d04e00"],
 					[value: 95, color: "#d04e00"],
@@ -330,7 +330,7 @@ metadata {
 				attributeState("off", label:'${name}')
 				attributeState("heat", label:'${name}')
 				attributeState("cool", label:'${name}')
-                attributeState("auto", label:'${name}')
+				attributeState("auto", label:'${name}')
 			}
             tileAttribute("device.heatingSetpoint", key: "HEATING_SETPOINT") {
             	attributeState("default", label:'${currentValue}', unit:"F")
@@ -343,8 +343,8 @@ metadata {
         
         // Show status of the API Connection for the Thermostat
 		standardTile("apiStatus", "device.apiConnected", width: 2, height: 2) {
-        	state "true", label: "API", backgroundColor: "#44b621", icon: "st.contact.contact.closed"
-            state "false", label: "API ", backgroundColor: "#ffa81e", icon: "st.contact.contact.open"
+			state "true", label: "API", backgroundColor: "#44b621", icon: "st.contact.contact.closed"
+			state "false", label: "API ", backgroundColor: "#ffa81e", icon: "st.contact.contact.open"
 		}
         
 		valueTile("temperature", "device.temperature", width: 2, height: 2) {
@@ -353,23 +353,23 @@ metadata {
                 	// Celsius Color Range
 					[value: 0, color: "#1e9cbb"],
 					[value: 15, color: "#1e9cbb"],
-                    [value: 19, color: "#1e9cbb"],
+					[value: 19, color: "#1e9cbb"],
                     
-                    [value: 21, color: "#44b621"],
+					[value: 21, color: "#44b621"],
 					[value: 22, color: "#44b621"],
-                    [value: 24, color: "#44b621"],
+					[value: 24, color: "#44b621"],
                     
 					[value: 21, color: "#d04e00"],
 					[value: 35, color: "#d04e00"],
 					[value: 37, color: "#d04e00"],
 					// Fahrenheit Color Range
-                	[value: 40, color: "#1e9cbb"],
+					[value: 40, color: "#1e9cbb"],
 					[value: 59, color: "#1e9cbb"],
-                    [value: 67, color: "#1e9cbb"],
+					[value: 67, color: "#1e9cbb"],
                     
-                    [value: 69, color: "#44b621"], 
+					[value: 69, color: "#44b621"], 
 					[value: 72, color: "#44b621"],
-                    [value: 74, color: "#44b621"],
+					[value: 74, color: "#44b621"],
                     
 					[value: 76, color: "#d04e00"],
 					[value: 95, color: "#d04e00"],
@@ -377,13 +377,8 @@ metadata {
 				]
 			)
 		}
-		standardTile("mode", "device.thermostatMode", width: 2, height: 2, inactiveLabel: false, decoration: "flat") {
-			state "off", action:"switchMode", nextState: "updating", icon: "st.thermostat.heating-cooling-off"
-			state "heat", action:"switchMode",  nextState: "updating", icon: "st.thermostat.heat"
-			state "cool", action:"switchMode",  nextState: "updating", icon: "st.thermostat.cool"
-			state "auto", action:"switchMode",  nextState: "updating", icon: "st.thermostat.auto"
-			state "auxHeatOnly", action:"switchMode", icon: "st.thermostat.emergency-heat"
-			state "updating", label:"Working", icon: "st.secondary.secondary"
+		valueTile("mode", "device.thermostatMode", width: 2, height: 2, inactiveLabel: false, decoration: "flat") {
+			state "thermostatMode", label:'${currentValue}°'
 		}
 		standardTile("fanMode", "device.thermostatFanMode", width: 2, height: 2, inactiveLabel: false, decoration: "flat") {
 			state "auto", label:'Fan: ${currentValue}', action:"switchFanMode", nextState: "on"
@@ -424,8 +419,10 @@ metadata {
 		}
 
 //Start Climate Controls
- 		valueTile("currentClimate", "device.currentClimate", width: 2, height: 2, inactiveLabel: false, decoration: "flat") {
-			state "Home", label:'${currentValue} home',
+ 		valueTile("climate", "device.currentClimate", width: 2, height: 2, inactiveLabel: false, decoration: "flat") {
+			state "currentClimate", label:'${currentValue}°'
+            
+/*            state "Home", label:'${currentValue} home',
 				icon: "st.Home.home4"
 			state "Sleep", label:'${currentValue} sleep',
  				icon: "st.Bedroom.bedroom2"
@@ -433,7 +430,8 @@ metadata {
 				icon: "st.Outdoor.outdoor20"
 			state "Away", label:'${currentValue} away',
 				icon: "st.presence.car.car"
-		}
+*/
+}
 //End Climate Controls    
         
         standardTile("operatingState", "device.thermostatOperatingState", width: 2, height: 2, inactiveLabel: false, decoration: "flat") {
@@ -532,7 +530,7 @@ metadata {
             "heatSliderControl", "heatingSetpoint",
 
 //Start Climate Controls
-			"currentClimate",
+			"climate",
             "refresh"])      
 //Start Climate Controls
 
@@ -636,6 +634,10 @@ private getThermostatDescriptionText(name, value, linkText) {
 
 	} else if (name == "thermostatFanMode") {
 		return "thermostat fan mode is ${value}"
+//Start Climate Controls
+	} else if (name == "currentClimate") {
+		return "thermostat climate is ${value}"
+//End Climate Controls
 
 	} else {
 		return "${name} = ${value}"
@@ -872,25 +874,27 @@ def getDataByName(String name) {
 
 def setThermostatMode(String value) {
 	log.debug "setThermostatMode({$value})"
-
 }
 
 //Start Climate Controls
 def setCurrentClimate(String value) {
 	log.debug "setCurrentClimate({$value})"
-
 }
 //End Climate Controls
 
 def setThermostatFanMode(String value) {
-
 	log.debug "setThermostatFanMode({$value})"
-
 }
 
 def generateModeEvent(mode) {
 	sendEvent(name: "thermostatMode", value: mode, descriptionText: "$device.displayName is in ${mode} mode", displayed: true)
 }
+
+//Start Climate Controls
+def generateClimateEvent(climate) {
+	sendEvent(name: "currentClimate", value: climate, descriptionText: "$device.displayName is in ${climate} climate", displayed: true)
+}
+//End Climate Controls
 
 def generateFanModeEvent(fanMode) {
 	sendEvent(name: "thermostatFanMode", value: fanMode, descriptionText: "$device.displayName fan is in ${mode} mode", displayed: true)
@@ -995,13 +999,21 @@ def fanOff() {
 
 }
 
+//Start Climate Controls
+def climate() {
+	device.currentValue("currentClimate")
+
+}
+//End Climate Controls   
+
+
 def generateSetpointEvent() {
 
 	log.debug "Generate SetPoint Event"
 
 	def mode = device.currentValue("thermostatMode")
-	log.debug "Current Mode = ${mode}"
-
+	log.debug "Current Mode = ${mode}" 
+ 
 	def heatingSetpoint = device.currentValue("heatingSetpoint").toInteger()
 	log.debug "Heating Setpoint = ${heatingSetpoint}"
 
@@ -1299,7 +1311,7 @@ private void api(method, args, success = {}) {
 			[uri: "${URI_ROOT}/group?format=json", type: 'post'],
 
 //Start Climate Controls
-			'updateClimate': 
+		'updateClimate': 
 			[uri: "${URI_ROOT}/thermostat?format=json", type: 'post'],
 //End Climate Controls
 
