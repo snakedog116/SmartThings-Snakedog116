@@ -1029,7 +1029,7 @@ def setClimate(child, Climate, deviceId) {
 //    def thermostatIdsString = getChildDeviceIdsString()
 //    log.debug "setCoolingSetpoint children: $thermostatIdsString"
 
-	def jsonRequestBody = '{"selection":{"selectionType":"thermostats","selectionMatch":"' + deviceId + '","includeRuntime":true},"thermostat": {"settings":{"climateRef":"'+"${climate}"+'"}}}'
+	def jsonRequestBody = '{"selection":{"selectionType":"thermostats","selectionMatch":"' + deviceId + '","includeRuntime":true},"thermostat": {"climate":{"climateRef":"'+"${climate}"+'"}}}'
 
 //    log.debug "Mode Request Body = ${jsonRequestBody}"
 //    debugEvent ("Mode Request Body = ${jsonRequestBody}")
