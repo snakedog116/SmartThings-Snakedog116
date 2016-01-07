@@ -118,13 +118,17 @@ metadata {
 		valueTile("hue", "device.hue", height: 1, width: 2, inactiveLabel: false, decoration: "flat") {
 			state "hue", label: 'Hue ${currentValue}',
           	  backgroundColors: [
-					[value: 0, color: "#f00"],
-                    [value: 6, color: "#ff5e00"],
-                    [value: 14, color: "#ffd500"],
-					[value: 37, color: "#00ff3c"],
-					[value: 67, color: "#1900ff"],
-					[value: 78, color: "#b700ff"],
-					[value: 100, color: "#f00"],
+					[value: 0, color: "#FF0000"],
+                    [value: 10, color: "#FF9900"],
+                    [value: 20, color: "#FAE100"],
+					[value: 30, color: "#33FF00"],
+					[value: 40, color: "#0AFFF7"],
+					[value: 50, color: "#05B0FF"],
+					[value: 60, color: "#0066FF"],
+                    [value: 70, color: "#DE5CFF"],
+                    [value: 80, color: "#D738FF"],
+                    [value: 90, color: "#FF0099"],
+                    [value: 100, color: "#FF0000"],
 				]
             }
         controlTile("colorTempSliderControl", "device.colorTemperature", "slider", height: 2, width: 4, inactiveLabel: false, range:"(2700..6500)") {
@@ -133,12 +137,12 @@ metadata {
         valueTile("colorTemp", "device.colorTemperature", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
             state "colorTemperature", label: '${currentValue}K',
           	  backgroundColors: [
-					[value: 2700, color: "#FFA757"],
+					[value: 3000, color: "#FFA757"],
                     [value: 3500, color: "#FFC18D"],
 					[value: 4500, color: "#FFDABB"],
-					[value: 5500, color: "#FFEDDE"],
-					[value: 6000, color: "#bed0ff"],
-					[value: 6500, color: "#8babff"],
+//					[value: 5500, color: "#FFEDDE"],
+					[value: 5500, color: "#bed0ff"],
+					[value: 6000, color: "#8babff"],
 			]
         }
 		main(["switch"])
