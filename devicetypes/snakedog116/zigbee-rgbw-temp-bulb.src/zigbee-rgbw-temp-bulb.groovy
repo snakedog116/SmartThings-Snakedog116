@@ -240,9 +240,10 @@ def setSaturation(value) {
 	//log.info cmd
 	cmd
 }
-
+//Updated to try to make the refresh button refresh current state.
 def refresh() {
-	"st rattr 0x${device.deviceNetworkId} 1 6 0"
+    zigbee.onOffRefresh() + zigbee.levelRefresh() + zigbee.onOffConfig() + zigbee.levelConfig()
+//OLD CODE	"st rattr 0x${device.deviceNetworkId} 1 6 0"
 }
 
 def poll(){
@@ -272,6 +273,12 @@ def setLevel(value) {
 def setColorTemperature(value) {
 	sendEvent(name: "colorTemperature", value: value)
     zigbee.setColorTemperature(value)
+}
+
+//This should allow real-time updating if the physical switch is turned on or off.
+def configure() {
+    log.debug "Configuring Reporting and Bindings."
+    zigbee.onOffConfig() + zigbee.levelConfig() + zigbee.onOffRefresh() + zigbee.levelRefresh()
 }
 
 
