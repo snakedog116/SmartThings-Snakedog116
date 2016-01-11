@@ -47,7 +47,7 @@ metadata {
         capability "Color Temperature"
 
 		command "setAdjustedColor"
-	}
+}
 
 	// simulator metadata
 	simulator {
