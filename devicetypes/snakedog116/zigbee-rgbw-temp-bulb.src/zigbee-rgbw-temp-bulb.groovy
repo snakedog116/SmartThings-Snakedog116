@@ -47,6 +47,7 @@ metadata {
         capability "Color Temperature"
 
 		command "setAdjustedColor"
+        fingerprint profileId: "0104", inClusters: "0000,0003,0004,0005,0006,0008,0300,0B04", outClusters: "0019"
 }
 
 	// simulator metadata
@@ -166,7 +167,6 @@ def parse(String description) {
 		return result
 	}
 }
-
 def on() {
 	// just assume it works for now
 	log.debug "on()"
@@ -180,7 +180,6 @@ def off() {
 	sendEvent(name: "switch", value: "off")
 	"st cmd 0x${device.deviceNetworkId} ${endpointId} 6 0 {}"
 }
-
 def setHue(value) {
 	def max = 0xfe
 	log.trace "setHue($value)"
@@ -242,8 +241,7 @@ def setSaturation(value) {
 }
 //Updated to try to make the refresh button refresh current state.
 def refresh() {
-    zigbee.onOffRefresh() + zigbee.levelRefresh() + zigbee.onOffConfig() + zigbee.levelConfig()
-//OLD CODE	"st rattr 0x${device.deviceNetworkId} 1 6 0"
+    zigbee.onOffRefresh() + zigbee.levelRefresh() + zigbee.colorTemperatureRefresh() + zigbee.onOffConfig() + zigbee.levelConfig() + zigbee.colorTemperatureConfig()//OLD CODE	"st rattr 0x${device.deviceNetworkId} 1 6 0"
 }
 
 def poll(){
@@ -269,7 +267,6 @@ def setLevel(value) {
 	cmds
 }
 
-
 def setColorTemperature(value) {
 	sendEvent(name: "colorTemperature", value: value)
     zigbee.setColorTemperature(value)
@@ -278,9 +275,8 @@ def setColorTemperature(value) {
 //This should allow real-time updating if the physical switch is turned on or off.
 def configure() {
     log.debug "Configuring Reporting and Bindings."
-    zigbee.onOffConfig() + zigbee.levelConfig() + zigbee.onOffRefresh() + zigbee.levelRefresh()
+    zigbee.onOffRefresh() + zigbee.levelRefresh() + zigbee.colorTemperatureRefresh() + zigbee.onOffConfig() + zigbee.levelConfig() + zigbee.colorTemperatureConfig()//OLD CODE	"st rattr 0x${device.deviceNetworkId} 1 6 0"
 }
-
 
 private getEndpointId() {
 	new BigInteger(device.endpointId, 16).toString()
